@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: web_tech_final_onlineshop
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: web_tech_final_onlineshop
+      POSTGRES_USER: eric
+      POSTGRES_PASSWORD: eric
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
