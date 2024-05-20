@@ -41,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final String[] PUBLIC_MATCHERS = {
+            "/",
             "/**/public/**",
             "/login/**",
             "/signin/**",
