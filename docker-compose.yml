@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mysql:
     image: mysql:latest
-    container_name: web_tech_final_onlineshop
+    container_name: web_tech_final_mysql
     ports:
       - "3308:3306"
     environment:
@@ -13,6 +13,18 @@ services:
       MYSQL_ROOT_PASSWORD: root_password # You need to set a password for the root user
     volumes:
       - mysql_data:/var/lib/mysql
+  postgres:
+    image: postgres:latest
+    container_name: web_tech_final_postgres
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: web_tech_final_onlineshop
+      POSTGRES_USER: eric
+      POSTGRES_PASSWORD: eric
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
+  postgres_data:
   mysql_data:

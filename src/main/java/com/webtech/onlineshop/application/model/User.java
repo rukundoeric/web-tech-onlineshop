@@ -5,39 +5,45 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
+@Table(name = "UserAccount")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product implements Serializable {
+public class User implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.AUTO)
     private UUID id;
 
+    @NotBlank(message = "Email is required and can not be empty")
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @NotBlank(message = "Password is required and can not be empty")
     @Column(nullable = false)
-    private String name;
+    private String password;
 
-    @Column(length = 1000, nullable = false)
-    private String description;
-
+    @NotBlank(message = "Firstname is required and can not be empty")
     @Column(nullable = false)
-    private Double price;
+    private String firstName;
 
-    @Column(length = 1000, nullable = false)
-    private String image;
+    @NotBlank(message = "Lastname is required and can not be empty")
+    @Column(nullable = false)
+    private String lastName;
+    @Column(nullable = false)
+    private String role;
+
 }

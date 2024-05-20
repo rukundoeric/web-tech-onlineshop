@@ -2,6 +2,7 @@ package com.webtech.onlineshop.application.controller;
 
 import com.webtech.onlineshop.application.model.Product;
 import com.webtech.onlineshop.application.service.ProductService;
+import com.webtech.onlineshop.common.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,37 +30,37 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<ResponseObject> getAllProducts() {
         List<Product> products = productService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseObject(products), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable UUID id) {
+    public ResponseEntity<ResponseObject> getProductById(@PathVariable UUID id) {
         Optional<Product> productOptional = productService.getProductById(id);
-        return productOptional.map(product -> new ResponseEntity<>(product, HttpStatus.OK))
+        return productOptional.map(product -> new ResponseEntity<>(new ResponseObject(product), HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<ResponseObject> createProduct(@RequestBody Product product) {
         Product savedProduct = productService.saveProduct(product);
-        return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseObject(savedProduct), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable UUID id, @RequestBody Product updatedProduct) {
+    public ResponseEntity<ResponseObject> updateProduct(@PathVariable UUID id, @RequestBody Product updatedProduct) {
         Product product = productService.updateProduct(id, updatedProduct);
         if (product != null) {
-            return new ResponseEntity<>(product, HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseObject(product), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
+    public ResponseEntity<ResponseObject> deleteProduct(@PathVariable UUID id) {
         productService.deleteProduct(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(new ResponseObject("Deleted successfully"), HttpStatus.NO_CONTENT);
     }
 }
